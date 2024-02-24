@@ -157,10 +157,10 @@ export function ListTodosComponent() {
         }
     ];
     return (
-        <div>
+        <div className="container">
             <h2>Things you want to Do</h2>
             <div>
-                <table border={1}>
+                <table className="table">
                     <thead>
                         <tr>
                             <th>Id</th>
