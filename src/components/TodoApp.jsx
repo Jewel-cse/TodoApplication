@@ -6,10 +6,12 @@ export default function TodoApp() {
         <div className="TodoApp">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<LoginComponent />}></Route>
-                    <Route path="/login" element={<LoginComponent />}></Route>
-                    <Route path="/welcome/:username" element={<WellcomeComponent />}></Route>
-                    <Route path="*" element={<ErrorComponent />}></Route>
+                    <Route path="/" element={<LoginComponent />}/>
+                    <Route path="/login" element={<LoginComponent />}/>
+                    <Route path="/welcome/:username" element={<WellcomeComponent />}/>
+                    <Route path="/todos" element={<ListTodosComponent />}/>
+                    
+                    <Route path="*" element={<ErrorComponent />}/>
                 </Routes>
             </BrowserRouter>
             {/* <LoginComponent></LoginComponent> */}
@@ -97,7 +99,7 @@ export function WellcomeComponent() {
     const {username} = useParams();
     return (
       <div>
-        <h2>wellcome mr.{username}</h2>
+        <h2>wellcome Mr. {username}</h2>
         <div className="Wellcome">Wellcome component</div>
       </div>
     ); 
@@ -109,5 +111,41 @@ export function ErrorComponent() {
             <div className="errorPage">404 page not found!!</div>
         </div>
 
+    );
+}
+
+export function ListTodosComponent() {
+    const todos = [
+      { id: 101, description: "Learn AWS" },
+      { id: 102, description: "Learn Spring" },
+      { id: 103, description: "Learn DevOps" },
+      { id: 104, description: "Learn Security" },
+    ];
+    return (
+        <div>
+            <h2>Things you want to Do</h2>
+            <div>
+                <table border={1}>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            todos.map(
+                                todo => (
+                                    <tr key={todo.id}>
+                                        <td>{todo.id}</td>
+                                        <td>{todo.description}</td>
+                                    </tr> 
+                                )
+                            )
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     );
 }
