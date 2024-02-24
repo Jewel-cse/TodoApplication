@@ -1,17 +1,24 @@
 import { useState } from "react";
 import "./TodoApp.css";
-import { BrowserRouter, Routes, Route, useNavigate,useParams } from "react-router-dom";
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    useNavigate,
+    useParams,
+    Link,
+} from "react-router-dom";
 export default function TodoApp() {
     return (
         <div className="TodoApp">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<LoginComponent />}/>
-                    <Route path="/login" element={<LoginComponent />}/>
-                    <Route path="/welcome/:username" element={<WellcomeComponent />}/>
-                    <Route path="/todos" element={<ListTodosComponent />}/>
-                    
-                    <Route path="*" element={<ErrorComponent />}/>
+                    <Route path="/" element={<LoginComponent />} />
+                    <Route path="/login" element={<LoginComponent />} />
+                    <Route path="/welcome/:username" element={<WellcomeComponent />} />
+                    <Route path="/todos" element={<ListTodosComponent />} />
+
+                    <Route path="*" element={<ErrorComponent />} />
                 </Routes>
             </BrowserRouter>
             {/* <LoginComponent></LoginComponent> */}
@@ -21,12 +28,11 @@ export default function TodoApp() {
 }
 
 export function LoginComponent() {
-    const [username, setUsername] = useState('jewel');
+    const [username, setUsername] = useState("jewel");
     const [password, setPassword] = useState();
     const [showSuccedMessage, setShowSuccedMessage] = useState(false);
     const [showFailedMessage, setShowFailedMessage] = useState(false);
     const navigate = useNavigate();
-
 
     function handleUsernameChange(event) {
         //console.log(event.target.value)
@@ -46,7 +52,7 @@ export function LoginComponent() {
             console.log("succeed");
             setShowSuccedMessage(true);
             setShowFailedMessage(false);
-            navigate(`/welcome/${username}`);    //please mark the tika sign instead of qutation
+            navigate(`/welcome/${username}`); //please mark the tika sign instead of qutation
         } else {
             console.log("failed");
             setShowSuccedMessage(false);
@@ -96,13 +102,15 @@ export function LoginComponent() {
 }
 
 export function WellcomeComponent() {
-    const {username} = useParams();
+    const { username } = useParams();
     return (
-      <div>
-        <h2>wellcome Mr. {username}</h2>
-        <div className="Wellcome">Wellcome component</div>
-      </div>
-    ); 
+        <div>
+            <h2>Wellcome Mr. {username}</h2>
+            <div className="Wellcome">
+                Manage your todos-<Link to="/todos">Go here</Link>
+            </div>
+        </div>
+    );
 }
 export function ErrorComponent() {
     return (
@@ -110,16 +118,41 @@ export function ErrorComponent() {
             <h2>Your effort is uncompareable</h2>
             <div className="errorPage">404 page not found!!</div>
         </div>
-
     );
 }
 
 export function ListTodosComponent() {
+    const today = new Date();
+    const targetDate = new Date(
+        today.getFullYear() + 12,
+        today.getMonth(),
+        today.getDay()
+    );
     const todos = [
-      { id: 101, description: "Learn AWS" },
-      { id: 102, description: "Learn Spring" },
-      { id: 103, description: "Learn DevOps" },
-      { id: 104, description: "Learn Security" },
+        {
+            id: 101,
+            description: "Learn AWS",
+            done: false,
+            targetDate: targetDate,
+        },
+        {
+            id: 102,
+            description: "Learn Spring",
+            done: false,
+            targetDate: targetDate,
+        },
+        {
+            id: 103,
+            description: "Learn DevOps",
+            done: false,
+            targetDate: targetDate,
+        },
+        {
+            id: 104,
+            description: "Learn Security",
+            done: false,
+            targetDate: targetDate,
+        }
     ];
     return (
         <div>
@@ -130,19 +163,19 @@ export function ListTodosComponent() {
                         <tr>
                             <th>Id</th>
                             <th>Description</th>
+                            <th>Is Done</th>
+                            <th>Target Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            todos.map(
-                                todo => (
-                                    <tr key={todo.id}>
-                                        <td>{todo.id}</td>
-                                        <td>{todo.description}</td>
-                                    </tr> 
-                                )
-                            )
-                        }
+                        {todos.map((todo) => (
+                            <tr key={todo.id}>
+                                <td>{todo.id}</td>
+                                <td>{todo.description}</td>
+                                <td>{todo.done.toString()}</td>
+                                <td>{todo.targetDate.toDateString()}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
