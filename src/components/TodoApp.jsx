@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./TodoApp.css";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate,useParams } from "react-router-dom";
 export default function TodoApp() {
     return (
         <div className="TodoApp">
@@ -8,7 +8,7 @@ export default function TodoApp() {
                 <Routes>
                     <Route path="/" element={<LoginComponent />}></Route>
                     <Route path="/login" element={<LoginComponent />}></Route>
-                    <Route path="/welcome" element={<WellcomeComponent />}></Route>
+                    <Route path="/welcome/:username" element={<WellcomeComponent />}></Route>
                     <Route path="*" element={<ErrorComponent />}></Route>
                 </Routes>
             </BrowserRouter>
@@ -19,7 +19,7 @@ export default function TodoApp() {
 }
 
 export function LoginComponent() {
-    const [username, setUsername] = useState();
+    const [username, setUsername] = useState('jewel');
     const [password, setPassword] = useState();
     const [showSuccedMessage, setShowSuccedMessage] = useState(false);
     const [showFailedMessage, setShowFailedMessage] = useState(false);
@@ -44,7 +44,7 @@ export function LoginComponent() {
             console.log("succeed");
             setShowSuccedMessage(true);
             setShowFailedMessage(false);
-            navigate('/welcome');
+            navigate(`/welcome/${username}`);    //please mark the tika sign instead of qutation
         } else {
             console.log("failed");
             setShowSuccedMessage(false);
@@ -94,7 +94,13 @@ export function LoginComponent() {
 }
 
 export function WellcomeComponent() {
-    return <div className="Wellcome">Wellcome component</div>;
+    const {username} = useParams();
+    return (
+      <div>
+        <h2>wellcome mr.{username}</h2>
+        <div className="Wellcome">Wellcome component</div>
+      </div>
+    ); 
 }
 export function ErrorComponent() {
     return (
