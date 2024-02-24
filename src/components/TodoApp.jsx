@@ -18,6 +18,7 @@ export default function TodoApp() {
                     <Route path="/login" element={<LoginComponent />} />
                     <Route path="/welcome/:username" element={<WellcomeComponent />} />
                     <Route path="/todos" element={<ListTodosComponent />} />
+                    <Route path="/logout" element={<LogoutComponent />} />
 
                     <Route path="*" element={<ErrorComponent />} />
                 </Routes>
@@ -196,5 +197,13 @@ export function FooterComponent() {
         <div className="footer">
             <hr />Footer
         </div>
+    );
+}
+export function LogoutComponent() {
+    return (
+      <div>
+        <h2>You are logged out !!!</h2>
+        <div className="logout">Thanks for using our App</div>
+      </div>
     );
 }
