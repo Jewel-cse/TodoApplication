@@ -11,6 +11,7 @@ import {
 export default function TodoApp() {
     return (
         <div className="TodoApp">
+            <HeaderComponent/>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<LoginComponent />} />
@@ -21,8 +22,8 @@ export default function TodoApp() {
                     <Route path="*" element={<ErrorComponent />} />
                 </Routes>
             </BrowserRouter>
-            {/* <LoginComponent></LoginComponent> */}
-            {/* <WellcomeComponent></WellcomeComponent> */}
+            <FooterComponent/>
+            
         </div>
     );
 }
@@ -127,9 +128,9 @@ export function ListTodosComponent() {
         today.getFullYear() + 12,
         today.getMonth(),
         today.getDay()
-    );
-    const todos = [
-        {
+        );
+        const todos = [
+            {
             id: 101,
             description: "Learn AWS",
             done: false,
@@ -179,6 +180,21 @@ export function ListTodosComponent() {
                     </tbody>
                 </table>
             </div>
+        </div>
+    );
+}
+
+export function HeaderComponent() {
+    return (
+        <div className="header">
+            Header<hr />
+        </div>
+    );
+}
+export function FooterComponent() {
+    return (
+        <div className="footer">
+            <hr />Footer
         </div>
     );
 }
