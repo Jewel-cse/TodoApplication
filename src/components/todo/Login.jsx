@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../security/AuthContext";
 
 export default function LoginComponent() {
   const [username, setUsername] = useState("jewel");
@@ -7,6 +8,8 @@ export default function LoginComponent() {
   const [showSuccedMessage, setShowSuccedMessage] = useState(false);
   const [showFailedMessage, setShowFailedMessage] = useState(false);
   const navigate = useNavigate();
+  const authContext = useAuth();
+  //const isAuthenticate = authContext.isAuthenticate;
 
   function handleUsernameChange(event) {
     //console.log(event.target.value)
@@ -23,11 +26,13 @@ export default function LoginComponent() {
     console.log(password);
 
     if (username === "jewel" && password === "1234") {
+      authContext.setAuthenticated(true);
       console.log("succeed");
       setShowSuccedMessage(true);
       setShowFailedMessage(false);
       navigate(`/welcome/${username}`); //please mark the tika sign instead of qutation
     } else {
+      authContext.setAuthenticated(false);
       console.log("failed");
       setShowSuccedMessage(false);
       setShowFailedMessage(true);
