@@ -5,45 +5,29 @@ import { useAuth } from "../security/AuthContext";
 export default function LoginComponent() {
   const [username, setUsername] = useState("jewel");
   const [password, setPassword] = useState();
-  const [showSuccedMessage, setShowSuccedMessage] = useState(false);
   const [showFailedMessage, setShowFailedMessage] = useState(false);
   const navigate = useNavigate();
   const authContext = useAuth();
-  //const isAuthenticate = authContext.isAuthenticate;
 
   function handleUsernameChange(event) {
-    //console.log(event.target.value)
     setUsername(event.target.value);
   }
 
   function handlePasswordChange(event) {
-    //console.log(event.target.value)
     setPassword(event.target.value);
   }
 
   function handleSubmit() {
-    console.log(username);
-    console.log(password);
-
-    if (username === "jewel" && password === "1234") {
-      authContext.setAuthenticated(true);
-      console.log("succeed");
-      setShowSuccedMessage(true);
-      setShowFailedMessage(false);
+    if (authContext.login(username,password)) {
       navigate(`/welcome/${username}`); //please mark the tika sign instead of qutation
     } else {
-      authContext.setAuthenticated(false);
-      console.log("failed");
-      setShowSuccedMessage(false);
       setShowFailedMessage(true);
     }
   }
 
   return (
     <div className="Login">
-      {showSuccedMessage && (
-        <div className="successMessage">Authenticated successfully</div>
-      )}
+      
       {showFailedMessage && (
         <div className="failedMessage">
           Authentication failed,please check your credentials

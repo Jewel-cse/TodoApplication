@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../security/AuthContext';
 
 export default function HeaderComponent() {
-  //const authContext = useContext(AuthContext);
+
   const authContext = useAuth();
   const isAuthenticated = authContext.isAuthenticated;
   
@@ -33,7 +33,7 @@ export default function HeaderComponent() {
                 {!isAuthenticated && <Link className="nav-link" to="/login">Login</Link>}
               </li>
               <li className="nav-item fs-5">
-                {isAuthenticated && <Link className="nav-link" to="/logout" onClick={()=>{authContext.setAuthenticated(false)}}> Logout</Link>}
+                {isAuthenticated && <Link className="nav-link" to="/logout" onClick={()=>{authContext.logout()}}> Logout</Link>}
               </li>
             </ul>
           </nav>
