@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { retrieveAllTodosForUsername } from "./api/TodoApiService";
 
 export default function ListTodosComponent() {
   const today = new Date();
@@ -6,32 +8,42 @@ export default function ListTodosComponent() {
     today.getMonth(),
     today.getDay()
   );
-  const todos = [
-    {
-      id: 101,
-      description: "Learn AWS",
-      done: false,
-      targetDate: targetDate,
-    },
-    {
-      id: 102,
-      description: "Learn Spring",
-      done: false,
-      targetDate: targetDate,
-    },
-    {
-      id: 103,
-      description: "Learn DevOps",
-      done: false,
-      targetDate: targetDate,
-    },
-    {
-      id: 104,
-      description: "Learn Security",
-      done: false,
-      targetDate: targetDate,
-    },
-  ];
+
+  // const todos = [
+  //   {
+  //     id: 101,
+  //     description: "Learn AWS",
+  //     done: false,
+  //     targetDate: targetDate,
+  //   },
+  //   {
+  //     id: 102,
+  //     description: "Learn Spring",
+  //     done: false,
+  //     targetDate: targetDate,
+  //   },
+  //   {
+  //     id: 103,
+  //     description: "Learn DevOps",
+  //     done: false,
+  //     targetDate: targetDate,
+  //   },
+  //   {
+  //     id: 104,
+  //     description: "Learn Security",
+  //     done: false,
+  //     targetDate: targetDate,
+  //   },
+  // ];
+
+  //this is for bring data from back-end
+  const [todos, setTodos] = useState([]);
+  useEffect(() => {refreshTodos()},[])
+  function refreshTodos() {
+    retrieveAllTodosForUsername('jewel')
+      .then((response) => {setTodos(response.data)})
+      .catch((error) => console.log(error));
+  }
   return (
     <div className="container">
       <h2>Things you want to Do</h2>
@@ -49,12 +61,13 @@ export default function ListTodosComponent() {
             {todos.map((todo) => {
               return (
                 <tr key={todo.id}>
-                  <td>{ todo.id}</td>
+                  <td>{todo.id}</td>
                   <td>{todo.description}</td>
                   <td>{todo.done.toString()}</td>
-                  <td>{todo.targetDate.toDateString()}</td>
+                  <td>{todo.targetDate.toString()}</td>
+                  {/* <td>{todo.targetDate.toDateString()}</td> */}
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>

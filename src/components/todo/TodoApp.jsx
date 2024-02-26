@@ -6,7 +6,7 @@ import LogoutComponent from "./Logout";
 import WellcomeComponent from "./Welcome";
 import ErrorComponent from "./Error";
 import ListTodosComponent from "./ListTodos";
-import AuthProvider, { useAuth } from "../security/AuthContext";
+import AuthProvider, { useAuth } from "./security/AuthContext";
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 export default function TodoApp() {
