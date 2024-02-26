@@ -1,13 +1,19 @@
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
-import {retrieveHelloWorldBean} from "./api/HelloWorldAPIService";
+import {
+  retrieveHelloWorld,retrieveHelloWorldBean,
+  retrieveHelloWorldPathvariable,
+} from "./api/HelloWorldAPIService";
+
 export default function WellcomeComponent() {
   const { username } = useParams();
   const [message, setMessage] = useState();
   
   function callHelloWorlAPI() {
     console.log("Clicked !!!");
-    retrieveHelloWorldBean()
+    //retrieveHelloWorld()
+    //retrieveHelloWorldBean()
+    retrieveHelloWorldPathvariable("Jewel")
       .then((response) => successfulResponse(response))
       .catch((error) => errorResponse(error))
       .finally(() => console.log("Clean Up"));

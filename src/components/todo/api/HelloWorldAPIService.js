@@ -1,7 +1,15 @@
 import axios from "axios";
+
+const apiClient = axios.create({
+  baseURL: "http://localhost:8080",
+});
+
 //1st way to invoke api call using axios
-export default function retrieveHelloWorld() {
-    return axios.get('http://localhost:8080/hello-world');
+export function retrieveHelloWorld() {
+    return apiClient.get("/hello-world");
 }
 //2nd way using arrow function
-export const retrieveHelloWorldBean = () => axios.get('http://localhost:8080/hello-world-bean');
+export const retrieveHelloWorldBean = () => apiClient.get("/hello-world-bean");
+
+export const retrieveHelloWorldPathvariable =
+    (username) => apiClient.get(`/hello-world/path-variable/${username}`);
