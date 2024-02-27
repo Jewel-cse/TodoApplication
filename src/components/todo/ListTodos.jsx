@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { deleteTodoApi, retrieveAllTodosForUsernameApi } from "./api/TodoApiService";
+import { useAuth } from "./security/AuthContext";
 
 export default function ListTodosComponent() {
   //const today = new Date();
@@ -35,12 +36,13 @@ export default function ListTodosComponent() {
   //     targetDate: targetDate,
   //   },
   // ];
-
+  const authContext = useAuth();
+  const username = authContext.username;
   //this is for bring data from back-end
   const [todos, setTodos] = useState([]);
   useEffect(() => {refreshTodos()},[])
   function refreshTodos() {
-    retrieveAllTodosForUsernameApi('jewel')
+    retrieveAllTodosForUsernameApi(username)
       .then((response) => {setTodos(response.data)})
       .catch((error) => console.log(error));
   }
@@ -49,7 +51,7 @@ export default function ListTodosComponent() {
   const [deleteMessage, setDeleteMessage] = useState(null);
   function deleteTodo(id) {
     console.log("clicked delete buton- " + id);
-    deleteTodoApi('jewel', id)
+    deleteTodoApi(username, id)
       .then(() => {
         //1.show message that successful delete
         //2.update todos
