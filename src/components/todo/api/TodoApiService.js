@@ -8,6 +8,10 @@ const apiClient = axios.create(
 );
 
 //retrive all the todos for a specific users
-export const retrieveAllTodosForUsername =
-    (username) => apiClient.get(`/users/${username}/todos`)
+export const retrieveAllTodosForUsernameApi =
+    (username) => apiClient.get(`/users/${username}/todos`);
+    
+//retrive all the todos for a specific users
+export const deleteTodoApi =
+    (username, id) => apiClient.delete(`/users/${username}/todos/${id}`);
     
