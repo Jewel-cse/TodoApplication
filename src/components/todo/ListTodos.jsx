@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { deleteTodoApi, retrieveAllTodosForUsernameApi } from "./api/TodoApiService";
 import { useAuth } from "./security/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function ListTodosComponent() {
   //const today = new Date();
@@ -40,15 +41,21 @@ export default function ListTodosComponent() {
   const username = authContext.username;
   //this is for bring data from back-end
   const [todos, setTodos] = useState([]);
-  useEffect(() => {refreshTodos()},[])
+  const [deleteMessage, setDeleteMessage] = useState(null);
+  const navigate = useNavigate()
+
+  useEffect(() => 
+    refreshTodos(), []);
+
   function refreshTodos() {
     retrieveAllTodosForUsernameApi(username)
-      .then((response) => {setTodos(response.data)})
+      .then((response) => {
+        setTodos(response.data);
+      })
       .catch((error) => console.log(error));
   }
 
-  //delete a todo 
-  const [deleteMessage, setDeleteMessage] = useState(null);
+  //delete a todo
   function deleteTodo(id) {
     console.log("clicked delete buton- " + id);
     deleteTodoApi(username, id)
@@ -58,7 +65,13 @@ export default function ListTodosComponent() {
         setDeleteMessage(`Delete of Todo with id ${id} successfull`);
         refreshTodos();
       })
-      .catch()
+      .catch((error) =>console.log(error));
+  }
+  //update todo
+  function updateTodo(id) {
+    console.log("clicked update buton - " + id);
+    //redirect a page
+    navigate(`/todo/${id}`);
   }
   return (
     <div className="container">
@@ -75,6 +88,7 @@ export default function ListTodosComponent() {
               <th>Is Done</th>
               <th>Target Date</th>
               <th>Delete</th>
+              <th>Update</th>
             </tr>
           </thead>
           <tbody>
@@ -92,6 +106,14 @@ export default function ListTodosComponent() {
                       onClick={() => deleteTodo(todo.id)}
                     >
                       delete
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-success "
+                      onClick={() => updateTodo(todo.id)}
+                    >
+                      Update
                     </button>
                   </td>
                 </tr>
