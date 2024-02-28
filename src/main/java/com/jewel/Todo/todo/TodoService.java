@@ -25,8 +25,10 @@ public class TodoService {
             return todos;
         }
 
-        public void addToDos(String name,String description,LocalDate targetDate,boolean done){
-            todos.add(new Todo(++todoCount,name,description,targetDate,done));
+        public Todo addToDos(String name,String description,LocalDate targetDate,boolean done){
+            Todo createdTodo = new Todo(++todoCount,name,description,targetDate,done);
+            todos.add(createdTodo);
+            return createdTodo;
         }
         public void deleteById(int id){
             Predicate<? super Todo> predicate = Todo -> Todo.getId() == id;
