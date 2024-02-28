@@ -1,6 +1,6 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "./todo/security/AuthContext";
-import { retrieveTodoApi } from "./todo/api/TodoApiService";
+import { retrieveTodoApi, updateTodoApi } from "./todo/api/TodoApiService";
 import { useEffect, useState } from "react";
 import { Formik, Form, Field ,ErrorMessage} from "formik";
 
@@ -9,7 +9,8 @@ export default function TodoComponent() {
     const authContext = useAuth();
     const username = authContext.username;
     const [description, setDescription] = useState("");
-    const [targetDate, setTargetDate] = useState("");
+  const [targetDate, setTargetDate] = useState("");
+  const navigate = useNavigate()
 
     useEffect(
         () => retrieveTodo(),
@@ -26,7 +27,19 @@ export default function TodoComponent() {
             .catch((error) => console.log(error));
     }
     function onSubmit(values) {
-        console.log(values)
+      console.log(values,'-for submit')
+      const todo = {
+        id: id,
+        description: values.description,
+        targetDate: values.targetDate,
+        done:false
+      }
+      //console.log(todo,'-todo object')
+      updateTodoApi(username, id, todo)
+        .then((response) => {
+          navigate('/todos')
+        })
+      .catch((error)=>console.log(error))
     }
     function validate(values) {
         let error = {}
@@ -35,7 +48,7 @@ export default function TodoComponent() {
         if (values.targetDate == null)
             error.targetDate ='Enter enter a valid date'
         
-        console.log(values)
+        console.log(values,"- for validation")
         return error
     }
     return (
