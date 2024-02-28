@@ -18,7 +18,6 @@ public class TodoApplication {
 	//Cross origin request (COR) not allow by default
 	//Allow all request only from http://localhost:3000
 
-<<<<<<< HEAD
 	@Bean
 	public WebMvcConfigurer corsConfigurer(){
 		return new WebMvcConfigurer(){
@@ -32,6 +31,4 @@ public class TodoApplication {
 	}
 
 
-=======
->>>>>>> 816894235d714537747138efa0229b0d02ffae53
 }
