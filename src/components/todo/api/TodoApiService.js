@@ -22,3 +22,7 @@ export const retrieveTodoApi =
 //update a todo for a specific id
 export const updateTodoApi =
     (username, id,todo) => apiClient.put(`/users/${username}/todos/${id}`,todo);
+
+//create a todo 
+export const createTodoApi =
+    (username,todo) => apiClient.post(`/users/${username}/todos`,todo);
