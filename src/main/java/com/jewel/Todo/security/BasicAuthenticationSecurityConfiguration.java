@@ -2,10 +2,13 @@ package com.jewel.Todo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.swing.text.html.Option;
 
 @Configuration
 public class BasicAuthenticationSecurityConfiguration {
@@ -18,8 +21,13 @@ public class BasicAuthenticationSecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        //1:basic auth
+        //2:Response to preflight request doesn't pass access control check
+
         return http.authorizeHttpRequests(
-                auth->auth.anyRequest().authenticated()
+                auth->auth
+                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                        .anyRequest().authenticated()
         )
         .httpBasic(Customizer.withDefaults())
         .sessionManagement(
