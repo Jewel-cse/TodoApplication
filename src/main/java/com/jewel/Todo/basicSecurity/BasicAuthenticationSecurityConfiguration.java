@@ -5,11 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @Configuration
-public class BasicAuthenticationSecurityConfiguration {
+@EnableWebSecurity
+public class BasicAuthenticationSecurityConfiguration extends WebSecurityConfiguration {
     //filter chain
     //all request are authenticated
     //basic authentication
@@ -24,6 +28,7 @@ public class BasicAuthenticationSecurityConfiguration {
 
         return http.authorizeHttpRequests(
                 auth->auth
+                        .requestMatchers("h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         .anyRequest().authenticated()
         )
@@ -34,4 +39,5 @@ public class BasicAuthenticationSecurityConfiguration {
         .csrf().disable()
         .build();
     }
+
 }
