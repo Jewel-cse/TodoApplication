@@ -1,5 +1,6 @@
-package com.jewel.Todo.todo;
+package com.jewel.Todo.todo.service;
 
+import com.jewel.Todo.todo.model.Todo;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
